@@ -28,23 +28,31 @@ class Card extends React.Component {
       number: props.number,
       face: props.face,
       cardName: setFrontCardName(props),
+      flipped: false, // starts on back of card
+      clicked: false,
     }
   }
 
-  flipCard() {
-    console.log("flipped")
+  flip() {
+    this.setState({ flipped: !this.state.flipped, clicked: !this.state.clicked })
   }
 
   render() {
-    return (
-      <div className={styles.card}>
-        <img className={styles.back}
-             onClick={this.flipCard}
-             src={require("./images/card-back.png")} />
+    let src = ""
+    let key = ""
 
-        <img className={styles.front}
-             onClick={this.flipCard}
-             src={require("./images/card-fronts/" + this.state.cardName + ".png")} />
+    if (this.state.flipped) {
+      key = "front"
+      src = "card-fronts/" + this.state.cardName + ".png"
+    } else {
+      key = "back"
+      src = "card-back.png"
+    }
+
+    return (
+      <div className={styles.card} flipped={this.state.flipped.toString()} onClick={this.flip.bind(this)}>
+        <img key={key}
+             src={require("./images/" + src)} />
       </div>
     )
   }
