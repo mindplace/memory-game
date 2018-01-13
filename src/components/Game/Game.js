@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import Timer from '../Timer/Timer'
 import styles from './Game.scss'
 
+import Card from './Card/Card'
+
 export const makeCard = (number: number, suit: suit) => {
   let faceCards = {
-    1: 'A',
-    11: 'J',
-    12: 'Q',
-    13: 'K',
+    1: 'ace',
+    11: 'jack',
+    12: 'queen',
+    13: 'king',
   }
 
   return {
@@ -38,7 +40,7 @@ export const shuffleDeck = (deck) => {
 }
 
 export const initializeDeck = () => {
-  let suitsArray = ['heart', 'diamond', 'spade', 'club']
+  let suitsArray = ['hearts', 'diamonds', 'spades', 'clubs']
   let cardValuesArray = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
 
   let generatedDeck = [].concat.apply([], suitsArray.map(suit => {
@@ -56,7 +58,7 @@ class Game extends React.Component {
       deck: initializeDeck(),
     }
   }
-
+  
   render() {
     const deck = this.state.deck
 
@@ -67,7 +69,12 @@ class Game extends React.Component {
           <Timer />
         </div>
 
-        <div className={styles.board}>Built {deck.length} cards</div>
+        <div className={styles.board}>
+          {deck.map((card, i) => <Card {...card} key={i}/>)}
+        </div>
+
+        <footer className={styles.footer}>The card backs image is a photo by <a href="https://unsplash.com/@yogidan2012" target="_blank">Daniele Levis Pelusi</a> on <a href="https://unsplash.com" target="_blank">Unsplash</a>.
+        </footer>
       </div>
     )
   }

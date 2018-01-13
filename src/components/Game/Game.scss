@@ -2,7 +2,26 @@
   margin: 5%;
 
   .header {
-    font-family: sans-serif;
     font-size: 20px;
+    margin-bottom: 40px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
   }
+
+  .board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.footer {
+  text-align: center;
+  opacity: 0.6;
+  padding-top: 40px;
+  font-size: 13px;
+
+  a { text-decoration: none; }
 }

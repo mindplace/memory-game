@@ -7,7 +7,8 @@
 
 - [x] Initialize a deck of cards with all the suits
 - [x] Ensure deck of cards is shuffled on loading new game
-- [ ] Initialize cards as components and render to the page
+- [x] Initialize cards as components and render to the page
+- [x] Card and board styles
 - [ ] Add onClick flip
 - [ ] Track number of found pairs
 - [ ] Add winning conditions
@@ -17,13 +18,5 @@
 
 
 # Notes
-
-Card front and back images
-https://github.com/hayeah/playing-cards-assets
-
-Back:
-Photo by Daniele Levis Pelusi on Unsplash
-https://unsplash.com/photos/88q5y8oHQto?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
-
 
 [Game rules](https://en.wikipedia.org/wiki/Concentration_(game))
