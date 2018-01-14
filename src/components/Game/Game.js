@@ -1,79 +1,85 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Utilities from './Utilities'
 
-import Timer from '../Timer/Timer'
 import styles from './Game.scss'
 
+import Timer from '../Timer/Timer'
+import Matches from '../Matches/Matches'
 import Card from './Card/Card'
-
-export const makeCard = (number: number, suit: suit) => {
-  let faceCards = {
-    1: 'ace',
-    11: 'jack',
-    12: 'queen',
-    13: 'king',
-  }
-
-  return {
-    suit: suit,
-    number: number,
-    face: faceCards[number] || null,
-  }
-}
-
-// Fisher-Yates shuffle :)
-// https://estherleytush.com/2017/02/16/implementing-fisher-yates-shuffle.html
-export const shuffleDeck = (deck) => {
-  let counter = deck.length - 1
-
-  while (counter > 0) {
-    let i = Math.floor(Math.random() * (counter + 1))
-
-    let chosenItem = deck[counter]
-    deck[counter] = deck[i]
-    deck[i] = chosenItem
-
-    counter -= 1
-  }
-
-  return deck
-}
-
-export const initializeDeck = () => {
-  let suitsArray = ['hearts', 'diamonds', 'spades', 'clubs']
-  let cardValuesArray = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
-
-  let generatedDeck = [].concat.apply([], suitsArray.map(suit => {
-    return cardValuesArray.map(number => makeCard(number, suit))
-  }))
-
-  return shuffleDeck(generatedDeck)
-}
 
 class Game extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      deck: initializeDeck(),
+      deck: Utilities.initializeDeck(),
+      currentFlippedCards: [],
+      foundMatches: [],
     }
   }
-  
-  render() {
-    const deck = this.state.deck
 
+  manageReviewingForMatches() {
+    let twoCardsFlipped = this.state.currentFlippedCards.length >= 2,
+        moreThanTwoFlipped = this.state.currentFlippedCards.length > 2,
+        cardsMatch = Utilities.checkForSameCardValues(this.state.currentFlippedCards),
+        game = this
+
+    if (!twoCardsFlipped) { return }
+    if (moreThanTwoFlipped) {
+      this.state.currentFlippedCards.forEach((card, i) => {
+        if (i < 2) { return }
+        card.setState({ flipped: false })
+      })
+    }
+
+    if (cardsMatch) {
+      this.state.foundMatches.push(this.state.currentFlippedCards)
+    }
+
+    setTimeout(() => {
+      if (cardsMatch) {
+        game.state.currentFlippedCards.forEach(card => card.setState({ removed: true }))
+      } else {
+        game.state.currentFlippedCards.forEach(card => card.setState({ flipped: false }))
+      }
+
+      game.setState({ currentFlippedCards: [] })
+    }, 600)
+  }
+
+  recordCardFlip(card) {
+    let cardIsAlreadyFlipped = this.state.currentFlippedCards.indexOf(card) > -1
+    if (cardIsAlreadyFlipped) {
+      this.setState({ currentFlippedCards: [] })
+      return card.setState({ flipped: false })
+    }
+
+    this.state.currentFlippedCards.push(card)
+    this.manageReviewingForMatches()
+  }
+
+  recordFoundMatches() {
+    return this.state.matches.length
+  }
+
+  render() {
     return (
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <h1>NYT Games Code Test: Memory</h1>
-          <Timer />
+
+          <div className={styles.rightSide}>
+            <Timer />
+            <Matches matches={this.state.foundMatches.length}/>
+          </div>
         </div>
 
         <div className={styles.board}>
-          {deck.map((card, i) => <Card {...card} key={i}/>)}
+          {this.state.deck.map((card, i) => <Card {...card} key={i} recordCardFlip={this.recordCardFlip.bind(this)}/>)}
         </div>
 
-        <footer className={styles.footer}>The card backs image is a photo by <a href="https://unsplash.com/@yogidan2012" target="_blank">Daniele Levis Pelusi</a> on <a href="https://unsplash.com" target="_blank">Unsplash</a>.
+        <footer className={styles.footer}>Card backs image is a photo by <a href="https://unsplash.com/@yogidan2012" target="_blank">Daniele Levis Pelusi</a> on <a href="https://unsplash.com" target="_blank">Unsplash</a>.
         </footer>
       </div>
     )

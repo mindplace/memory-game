@@ -5,9 +5,9 @@
 - [x] Initialize cards as components and render to the page
 - [x] Card and board styles
 - [x] Add onClick flip
-- [ ] Track number of found pairs
-- [ ] Add winning conditions
-- [ ] Add scoring
+- [x] Add recognition and state saving of click actions
+- [x] Track number of found pairs
+- [ ] Add winning conditions and scoring 
 - [ ] Three-card version functionality
 - [ ] Using cookies to save game progress ??
 

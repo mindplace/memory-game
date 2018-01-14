@@ -1,6 +1,8 @@
 $dark-gray: #a9a9a9;
 
 .card {
+  cursor: pointer;
+  margin: 5px;
   height: 96.375px;
   opacity: 0;
 
@@ -37,6 +39,11 @@ $dark-gray: #a9a9a9;
     &:hover { box-shadow: 0 0 10px $dark-gray; }
   }
 
-  margin: 5px;
-  cursor: pointer;
+  .removed {
+    border: 3px dashed lightgray;
+    border-radius: 5px;
+    width: 70px;
+    height: 100%;
+    cursor: initial;
+  }
 }
