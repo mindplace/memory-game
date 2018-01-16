@@ -7,8 +7,10 @@
 - [x] Add onClick flip
 - [x] Add recognition and state saving of click actions
 - [x] Track number of found pairs
-- [ ] Add winning conditions and scoring 
-- [ ] Three-card version functionality
+- [x] Add winning conditions and scoring
+- [ ] PropTypes and tests
+- [ ] Easy vs normal version options
+- [ ] Three-card version options
 - [ ] Using cookies to save game progress ??
 
 

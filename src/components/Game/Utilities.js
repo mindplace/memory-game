@@ -13,7 +13,7 @@ module.exports = {
       face: faceCards[number] || null,
     }
   },
-  
+
   // Fisher-Yates shuffle :)
   // https://estherleytush.com/2017/02/16/implementing-fisher-yates-shuffle.html
   shuffle: (array) => {
@@ -32,9 +32,20 @@ module.exports = {
     return array
   },
 
-  initializeDeck: () => {
-    let suitsArray = ['hearts', 'diamonds', 'spades', 'clubs'],
-        cardValuesArray = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
+  initializeDeck: ({ difficulty: difficulty, cardsPerMove: cardsPerMove }) => {
+    let cardValuesArray, suitsArray
+
+    if (difficulty == "easy") {
+      cardValuesArray = [ 11, 12, 13 ]
+    } else if (difficulty == "normal") {
+      cardValuesArray = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
+    }
+
+    if (cardsPerMove == 3) {
+      suitsArray = ['hearts', 'diamonds', 'spades']
+    } else if (cardsPerMove == 2) {
+      suitsArray = ['hearts', 'diamonds', 'spades', 'clubs']
+    }
 
     let generatedDeck = [].concat.apply([], suitsArray.map(suit => {
       return cardValuesArray.map(number => {
@@ -59,4 +70,8 @@ module.exports = {
 
     return allIdentical
   },
+
+  allMatchesFound: (array) => {
+    return array.every(card => card.state.removed || card.state.flipped)
+  }
 }

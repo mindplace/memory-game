@@ -19,7 +19,6 @@ export const setFrontCardName = (card) => {
 }
 
 class Card extends React.Component {
-
   constructor(props) {
     super(props)
 
@@ -39,6 +38,14 @@ class Card extends React.Component {
     this.props.recordCardFlip(this)
   }
 
+  determineImageSRC() {
+    if (this.state.flipped) {
+      return "card-fronts/" + this.state.cardName + ".png"
+    } else {
+      return "card-back.png"
+    }
+  }
+
   render() {
     if (this.state.removed) {
       return (
@@ -48,18 +55,9 @@ class Card extends React.Component {
       )
     }
 
-    let src = ""
-    let key = ""
-
-    if (this.state.flipped) {
-      src = "card-fronts/" + this.state.cardName + ".png"
-    } else {
-      src = "card-back.png"
-    }
-
     return (
       <div className={styles.card} flipped={this.state.flipped.toString()} onClick={this.flip.bind(this)}>
-        <img src={require("./images/" + src)} />
+        <img src={require("./images/" + this.determineImageSRC())} />
       </div>
     )
   }

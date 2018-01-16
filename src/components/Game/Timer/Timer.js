@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import styles from './Timer.scss'
+import styles from '../Game.scss'
 
-export const formatTime = time => {
+export const formatTime = (time) => {
   if (time < 0) return '--:--'
   const h = Math.floor(time / 3600)
   const m = Math.floor((time % 3600) / 60)
@@ -14,22 +14,13 @@ export const formatTime = time => {
   return `${m}:${ss}`
 }
 
-const Timer = ({ time = 0 }) => (
-  <div className={styles.timer}>
-    <span className={styles.elapsedTime}>Elapsed Time:</span>
-    <span className={styles.timerCounter}>{formatTime(time)}</span>  
-  </div>
-)
-
-Timer.propTypes = {
-  time: PropTypes.number,
-}
-
-class TimerContainer extends React.Component {
+class Timer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       secondsElapsed: 0,
+      shouldStart: props.shouldStart,
+      shouldStop: props.shouldStop,
     }
   }
 
@@ -48,8 +39,13 @@ class TimerContainer extends React.Component {
   }
 
   render() {
-    return <Timer time={this.state.secondsElapsed} />
+    return (
+      <div className={styles.timer}>
+        <span className={styles.elapsedTime}>Elapsed Time:</span>
+        <span className={styles.timerCounter}>{formatTime(this.state.secondsElapsed)}</span>
+      </div>
+    )
   }
 }
 
-export default TimerContainer
+export default Timer
