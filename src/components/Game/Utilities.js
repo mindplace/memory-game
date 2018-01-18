@@ -1,5 +1,5 @@
 module.exports = {
-  makeCard: (number, suit) => {
+  makeCard: ({ number: number, suit: suit }) => {
     let faceCards = {
       1: 'ace',
       11: 'jack',
@@ -50,7 +50,7 @@ module.exports = {
     let generatedDeck = [].concat.apply([], suitsArray.map(suit => {
       return cardValuesArray.map(number => {
         let additionalProps = {flipped: false, clicked: false, removed: false},
-            builtCard = module.exports.makeCard(number, suit)
+            builtCard = module.exports.makeCard({ number: number, suit: suit })
         return Object.assign(additionalProps, builtCard)
       })
     }))
@@ -73,5 +73,13 @@ module.exports = {
 
   allMatchesFound: (array) => {
     return array.every(card => card.state.removed || card.state.flipped)
-  }
+  },
+
+  calculateScore: ({ moves: moves, seconds: seconds, cardsPerMove: cardsPerMove, cardsInDeck: cardsInDeck }) => {
+    // an augmented version of y = 1 / x
+    let baseScore = ((1000000 * cardsInDeck) / seconds) / moves,
+        totalScore = baseScore * cardsPerMove
+
+    return Math.ceil(totalScore)
+  },
 }

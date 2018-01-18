@@ -19,17 +19,26 @@ class Timer extends React.Component {
     super(props)
     this.state = {
       secondsElapsed: 0,
-      shouldStart: props.shouldStart,
-      shouldStop: props.shouldStop,
     }
   }
 
-  componentDidMount() {
-    this.interval = setInterval(this.tick.bind(this), 1000)
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.shouldStart && !this.props.shouldStart) {
+      this.startTimer()
+    }
+
+    if (nextProps.shouldStop && !this.props.shouldStop) {
+      this.stopTimer()
+    }
   }
 
-  componentWillUnmount() {
+  stopTimer() {
     clearInterval(this.interval)
+    this.props.emitTotalTime(this.state)
+  }
+
+  startTimer() {
+    this.interval = setInterval(this.tick.bind(this), 1000)
   }
 
   tick() {
