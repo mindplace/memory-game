@@ -147,4 +147,19 @@ class Game extends React.Component {
   }
 }
 
+Game.propTypes = {
+  optionsChosen:          PropTypes.bool,
+  gameHasStarted:         PropTypes.bool,
+  cardsFlippedTime:       PropTypes.number,
+  deck:                   PropTypes.array,
+  cardsOutOfTheGame:      PropTypes.array,
+  currentFlippedCards:    PropTypes.array,
+  foundMatches:           PropTypes.array,
+  moves:                  PropTypes.number,
+  cardsPerMove:           PropTypes.number,
+  moveInProgress:         PropTypes.bool,
+  totalGameTimeInSeconds: PropTypes.number,
+  winningConditionsMet:   PropTypes.bool,
+}
+
 export default Game

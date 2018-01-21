@@ -57,4 +57,8 @@ class Timer extends React.Component {
   }
 }
 
+Timer.propTypes = {
+  secondsElapsed: PropTypes.number,
+}
+
 export default Timer

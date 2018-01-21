@@ -30,7 +30,7 @@ class GameOptions extends React.Component {
     if (e.target.name == "difficulty") {
       value = (value == "on" ? "normal" : "easy")
     }
-    
+
     newState[e.target.name] = value
     this.setState(newState)
   }
@@ -81,6 +81,11 @@ class GameOptions extends React.Component {
      </div>
     )
   }
+}
+
+GameOptions.propTypes = {
+  difficulty:   PropTypes.string,
+  cardsPerMove: PropTypes.number,
 }
 
 export default GameOptions

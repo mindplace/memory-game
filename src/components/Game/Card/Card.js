@@ -62,4 +62,14 @@ class Card extends React.Component {
   }
 }
 
+Card.propTypes = {
+  suit:     PropTypes.string,
+  number:   PropTypes.number,
+  face:     PropTypes.string,
+  cardName: PropTypes.func,
+  flipped:  PropTypes.bool,
+  clicked:  PropTypes.bool,
+  removed:  PropTypes.bool,
+}
+
 export default Card
