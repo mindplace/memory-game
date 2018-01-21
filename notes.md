@@ -10,9 +10,9 @@
 - [x] Add winning conditions and scoring
 - [x] Easy vs normal version options
 - [x] Three-card version options
-- [ ] PropTypes and tests
-- [ ] Using cookies to save game progress ??
-
+- [x] PropTypes
+- [ ] Tests for Game, Card, Utilities
+- [ ] Styles for endgame
 
 # Notes
 
