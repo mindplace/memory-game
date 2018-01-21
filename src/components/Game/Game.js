@@ -16,12 +16,14 @@ class Game extends React.Component {
     this.state = {
       optionsChosen: false,
       gameHasStarted: false,
+      cardsFlippedTime: 600,
       deck: [],
       cardsOutOfTheGame: [],
       currentFlippedCards: [],
       foundMatches: [],
       moves: 0,
       cardsPerMove: 0,
+      moveInProgress: false,
       totalGameTimeInSeconds: 0,
       winningConditionsMet: false,
     }
@@ -36,7 +38,7 @@ class Game extends React.Component {
       difficulty: values.difficulty,
       cardsPerMove: values.cardsPerMove,
     })
-    
+
     this.setState({
       difficulty: values.difficulty,
       cardsPerMove: values.cardsPerMove,
@@ -47,8 +49,10 @@ class Game extends React.Component {
 
   recordCardFlip(card) {
     let cardIsAlreadyFlipped = this.state.currentFlippedCards.indexOf(card) > -1
-    if (cardIsAlreadyFlipped) {
-      this.setState({ currentFlippedCards: [] })
+    if (cardIsAlreadyFlipped || this.state.moveInProgress) {
+      let currentFlippedCards = this.state.currentFlippedCards,
+          cardIndex = currentFlippedCards.indexOf(card)
+      this.setState({ currentFlippedCards: currentFlippedCards.splice(cardIndex, 1) })
       return card.setState({ flipped: false })
     }
 
@@ -56,57 +60,46 @@ class Game extends React.Component {
       this.setState({ gameHasStarted: true })
     }
 
-    if (this.state.cardsOutOfTheGame.indexOf(card) == -1) {
-      let newcardsOutOfTheGame = this.state.cardsOutOfTheGame
-      newcardsOutOfTheGame.push(card)
-      this.setState({ cardsOutOfTheGame: newcardsOutOfTheGame })
-    }
-
     let newFlippedCards = this.state.currentFlippedCards
     newFlippedCards.push(card)
-    this.setState({ currentFlippedCards: newFlippedCards })
-    this.manageReviewingForMatches()
+    this.setState({ currentFlippedCards: newFlippedCards }, this.manageReviewingForMatches)
   }
 
   manageReviewingForMatches() {
-    let that = this
-    let tooManyFlipped = this.state.currentFlippedCards.length > this.state.cardsPerMove,
-        tooFewFlipped = this.state.currentFlippedCards.length !== this.state.cardsPerMove
+    let tooFewFlipped = this.state.currentFlippedCards.length < this.state.cardsPerMove,
+        tooManyFlipped = this.state.currentFlippedCards.length > this.state.cardsPerMove,
+        correctNumFlipped = this.state.currentFlippedCards.length === this.state.cardsPerMove
 
-    if (tooManyFlipped || tooFewFlipped) {
-      let extraCards = this.state.currentFlippedCards.slice(this.state.cardsPerMove - 1, this.state.currentFlippedCards.length)
-      return
+    if (tooFewFlipped || this.state.moveInProgress) { return }
+    if (correctNumFlipped) {
+      let newMoves = this.state.moves + 1
+      this.setState({ moves: newMoves, moveInProgress: true })
     }
 
-    let cardsMatch = Utilities.checkForSameCardValues(this.state.currentFlippedCards),
-        game = this
+    let currentFlippedCards = this.state.currentFlippedCards.slice(0, this.state.cardsPerMove),
+        cardsMatch = Utilities.checkForSameCardValues(currentFlippedCards)
 
-    let newMoves = this.state.moves + 1
-    this.setState({ moves: newMoves })
-
-    if (cardsMatch) {
-      this.state.foundMatches.push(this.state.currentFlippedCards)
-    }
-
+    let game = this
     setTimeout(() => {
-      let matchingCards = game.state.currentFlippedCards.slice(0, game.state.cardsPerMove),
-          additionalFlippedCards = game.state.currentFlippedCards.slice(game.state.cardsPerMove, game.state.currentFlippedCards.length)
+      let additionalFlippedCards = game.state.currentFlippedCards.slice(game.state.cardsPerMove, game.state.currentFlippedCards.length)
 
       if (cardsMatch) {
-        matchingCards.forEach(card => card.setState({ removed: true }))
+        currentFlippedCards.forEach(card => card.setState({ removed: true }))
+        let totalFoundMatches = currentFlippedCards.concat(game.state.foundMatches)
+        game.setState({ foundMatches: totalFoundMatches })
       } else {
-        matchingCards.forEach(card => card.setState({ flipped: false }))
+        currentFlippedCards.forEach(card => card.setState({ flipped: false }))
       }
 
-      game.setState({ currentFlippedCards: additionalFlippedCards })
+      game.setState({ currentFlippedCards: additionalFlippedCards, moveInProgress: false })
       game.checkWinningConditions()
-    }, 600)
+    }, game.state.cardsFlippedTime)
   }
 
   checkWinningConditions() {
     if (this.state.deck.length != this.state.cardsOutOfTheGame.length) { return false }
     if (Utilities.allMatchesFound(this.state.cardsOutOfTheGame)) {
-      this.setState({ winningConditionsMet: true, })
+      this.setState({ winningConditionsMet: true })
     }
     return this.state.winningConditionsMet
   }
@@ -125,7 +118,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className={styles.wrapper}>
-        <div className={styles.header}>
+        <div className={this.state.optionsChosen ? styles.header : styles.hidden}>
           <h1>Memory</h1>
 
           <div className={styles.rightSide}>
@@ -146,7 +139,7 @@ class Game extends React.Component {
         <WinMessage winningConditions={this.state.winningConditionsMet}
                     score={this.state.score} />
 
-        <footer className={styles.footer}>
+        <footer className={this.state.optionsChosen ? styles.footer : styles.hidden}>
           Card image is from <a href="https://www.artofplay.com/products/peak-playing-cards%20" target="_blank">Art of Play</a>
         </footer>
       </div>

@@ -8,9 +8,9 @@
 - [x] Add recognition and state saving of click actions
 - [x] Track number of found pairs
 - [x] Add winning conditions and scoring
+- [x] Easy vs normal version options
+- [x] Three-card version options
 - [ ] PropTypes and tests
-- [ ] Easy vs normal version options
-- [ ] Three-card version options
 - [ ] Using cookies to save game progress ??
 
 

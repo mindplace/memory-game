@@ -12,10 +12,7 @@ export const setFrontCardName = (card) => {
     baseName += card.number.toString()
   }
 
-  baseName += "_of_"
-  baseName += card.suit
-
-  return baseName
+  return baseName + "_of_" + card.suit
 }
 
 class Card extends React.Component {
@@ -31,10 +28,12 @@ class Card extends React.Component {
       clicked: props.clicked,
       removed: props.removed,
     }
+
+    this.flip = this.flip.bind(this)
   }
 
   flip(e) {
-    this.setState({flipped: !this.state.flipped, clicked: !this.state.clicked})
+    this.setState({ flipped: !this.state.flipped, clicked: !this.state.clicked })
     this.props.recordCardFlip(this)
   }
 
@@ -56,7 +55,7 @@ class Card extends React.Component {
     }
 
     return (
-      <div className={styles.card} flipped={this.state.flipped.toString()} onClick={this.flip.bind(this)}>
+      <div className={styles.card} flipped={this.state.flipped.toString()} onClick={this.flip}>
         <img src={require("./images/" + this.determineImageSRC())} />
       </div>
     )

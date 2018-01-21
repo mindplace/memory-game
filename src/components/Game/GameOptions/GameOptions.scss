@@ -1,0 +1,133 @@
+@mixin fadeIn($duration) {
+  -webkit-animation: fadein $duration;
+          animation: fadein $duration;
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+$themeColor: rebeccapurple;
+
+.optionsScreen {
+  @include fadeIn(5s);
+
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  height: 100vh;
+
+  padding: 15%;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+
+  background-image: url(./images/volkan-olmez-523.jpg);
+  background-size: cover;
+  background-position: center;
+
+  .topperTitle {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 50px;
+    margin-bottom: 35px;
+  }
+
+  .optionsForm {
+    padding: 10px;
+
+    .choices {
+      text-align: left;
+      padding: 20px;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    button {
+      margin: 20px;
+      padding: 10px 40px;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 2px solid $themeColor;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 1s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 0 0 5px rgba($themeColor, 0.4);
+        color: $themeColor;
+      }
+    }
+  }
+
+  .choiceSection {
+    display: flex;
+    width: 270px;
+    justify-content: space-around;
+    margin: auto;
+    margin-bottom: 20px;
+
+    .rightChoice, .leftChoice { width: 70px; }
+    .leftChoice { text-align: right; }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+
+      .slider {
+        width: 46px;
+        height: 19px;
+        position: absolute;
+        cursor: pointer;
+        top: -3px;
+        left: -25px;
+        right: 0;
+        bottom: 0;
+        background-color: $themeColor;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 34px;
+
+        &:before {
+          border-radius: 50%;
+          position: absolute;
+          content: "";
+          height: 11px;
+          width: 11px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+      }
+
+      input { display:none; }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px $themeColor;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+    }
+  }
+}
