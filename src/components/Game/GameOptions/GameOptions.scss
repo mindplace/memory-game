@@ -56,23 +56,6 @@ $themeColor: rebeccapurple;
       font-size: 14px;
       letter-spacing: 1px;
     }
-
-    button {
-      margin: 20px;
-      padding: 10px 40px;
-      font-size: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border: 2px solid $themeColor;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 1s ease-in-out;
-
-      &:hover {
-        box-shadow: 0 0 0 5px rgba($themeColor, 0.4);
-        color: $themeColor;
-      }
-    }
   }
 
   .choiceSection {

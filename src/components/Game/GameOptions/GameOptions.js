@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import styles from './GameOptions.scss'
+import gameStyles from '../Game.scss'
 
 class GameOptions extends React.Component {
   constructor(props) {
@@ -73,7 +74,6 @@ class GameOptions extends React.Component {
 
              <div className={styles.rightChoice}>3 cards</div>
            </div>
-
          </div>
 
          <button onClick={this.handleFormSubmit}>Play</button>

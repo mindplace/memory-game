@@ -96,9 +96,7 @@ class Game extends React.Component {
   }
 
   checkWinningConditions() {
-    console.log("num of cards in deck: ", this.state.deck.length, "num of cards out of the game: ", this.state.cardsOutOfTheGame.length)
     if (this.state.deck.length != this.state.cardsOutOfTheGame.length) { return false }
-    debugger
     if (Utilities.allMatchesFound(this.state.cardsOutOfTheGame)) {
       this.setState({ winningConditionsMet: true })
     }

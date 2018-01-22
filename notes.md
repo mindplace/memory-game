@@ -11,8 +11,8 @@
 - [x] Easy vs normal version options
 - [x] Three-card version options
 - [x] PropTypes
-- [ ] Tests for Game, Card, Utilities
-- [ ] Styles for endgame
+- [x] Tests for Game, Card, Utilities
+- [x] Styles for endgame
 
 # Notes
 

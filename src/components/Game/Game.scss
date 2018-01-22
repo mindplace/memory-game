@@ -1,3 +1,5 @@
+$themeColor: rebeccapurple;
+
 .wrapper {
   padding: 50px 90px 30px;
   position: relative;
@@ -28,7 +30,7 @@
       }
 
       .timerCounter, .matchesCounter, .movesCounter {
-        color: rebeccapurple;
+        color: $themeColor;
         font-size: 14px;
       }
     }
@@ -39,41 +41,6 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-
-  .winningMessage {
-    position: absolute;
-    min-width: 300px;
-    max-width: 400px;
-    z-index: 10;
-    margin-right: auto;
-    margin-left: auto;
-    top: 200px;
-    left: 0;
-    right: 0;
-
-    padding: 50px;
-    text-align: center;
-    background: white;
-    border: 5px solid lightblue;
-    border-radius: 10px;
-    font-size: 20px;
-
-    box-shadow: 0 0 0 rgba(lightblue, 0.4);
-    animation: pulse 2s infinite;
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(lightblue, 0.4); }
-      70% { box-shadow: 0 0 0 20px rgba(lightblue, 0); }
-      100% { box-shadow: 0 0 0 40px rgba(lightblue, 0); }
-    }
-
-    h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-
-    h3 { font-size: 15px; }
-  }
 }
 
 .footer {
@@ -83,4 +50,21 @@
   font-size: 13px;
 
   a { text-decoration: none; }
+}
+
+button {
+  margin: 20px;
+  padding: 10px 40px;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid $themeColor;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 1s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 0 5px rgba($themeColor, 0.4);
+    color: $themeColor;
+  }
 }
