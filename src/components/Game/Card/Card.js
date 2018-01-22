@@ -24,9 +24,9 @@ class Card extends React.Component {
       number: props.number,
       face: props.face,
       cardName: setFrontCardName(props),
-      flipped: props.flipped, // starts on back of card
-      clicked: props.clicked,
-      removed: props.removed,
+      flipped: false, // starts on back of card
+      clicked: false,
+      removed: false,
     }
 
     this.flip = this.flip.bind(this)

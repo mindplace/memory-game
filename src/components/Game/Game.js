@@ -20,7 +20,6 @@ class Game extends React.Component {
       deck: [],
       cardsOutOfTheGame: [],
       currentFlippedCards: [],
-      foundMatches: [],
       moves: 0,
       cardsPerMove: 0,
       moveInProgress: false,
@@ -85,8 +84,8 @@ class Game extends React.Component {
 
       if (cardsMatch) {
         currentFlippedCards.forEach(card => card.setState({ removed: true }))
-        let totalFoundMatches = currentFlippedCards.concat(game.state.foundMatches)
-        game.setState({ foundMatches: totalFoundMatches })
+        let cardsOutOfTheGame = currentFlippedCards.concat(game.state.cardsOutOfTheGame)
+        game.setState({ cardsOutOfTheGame: cardsOutOfTheGame })
       } else {
         currentFlippedCards.forEach(card => card.setState({ flipped: false }))
       }
@@ -97,7 +96,9 @@ class Game extends React.Component {
   }
 
   checkWinningConditions() {
+    console.log("num of cards in deck: ", this.state.deck.length, "num of cards out of the game: ", this.state.cardsOutOfTheGame.length)
     if (this.state.deck.length != this.state.cardsOutOfTheGame.length) { return false }
+    debugger
     if (Utilities.allMatchesFound(this.state.cardsOutOfTheGame)) {
       this.setState({ winningConditionsMet: true })
     }
@@ -154,7 +155,6 @@ Game.propTypes = {
   deck:                   PropTypes.array,
   cardsOutOfTheGame:      PropTypes.array,
   currentFlippedCards:    PropTypes.array,
-  foundMatches:           PropTypes.array,
   moves:                  PropTypes.number,
   cardsPerMove:           PropTypes.number,
   moveInProgress:         PropTypes.bool,

@@ -1,4 +1,4 @@
-module.exports = {
+const Utilities = {
   makeCard: ({ number: number, suit: suit }) => {
     let faceCards = {
       1: 'ace',
@@ -36,7 +36,7 @@ module.exports = {
     let cardValuesArray, suitsArray
 
     if (difficulty == "easy") {
-      cardValuesArray = [ 11, 12, 13 ]
+      cardValuesArray = [ 10, 11, 12, 13 ]
     } else if (difficulty == "normal") {
       cardValuesArray = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
     }
@@ -49,13 +49,11 @@ module.exports = {
 
     let generatedDeck = [].concat.apply([], suitsArray.map(suit => {
       return cardValuesArray.map(number => {
-        let additionalProps = {flipped: false, clicked: false, removed: false},
-            builtCard = module.exports.makeCard({ number: number, suit: suit })
-        return Object.assign(additionalProps, builtCard)
+        return Utilities.makeCard({ number: number, suit: suit })
       })
     }))
 
-    return module.exports.shuffle(generatedDeck)
+    return Utilities.shuffle(generatedDeck)
   },
 
   checkForSameCardValues: (array) => {
@@ -83,3 +81,5 @@ module.exports = {
     return Math.ceil(totalScore)
   },
 }
+
+export default Utilities
