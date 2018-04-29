@@ -1,0 +1,15 @@
+.timer {
+  margin: 10px 0 10px;
+
+  .elapsedTime {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-right: 10px;
+  }
+
+  .timerCounter {
+    color: rebeccapurple;
+    font-size: 14px;
+  }
+}
