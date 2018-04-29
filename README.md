@@ -2,7 +2,7 @@
 
 ![memory](memory.png)
 
-[Game rules](https://en.wikipedia.org/wiki/Concentration_(game)
+[Game rules](https://en.wikipedia.org/wiki/Concentration_(game))
 
 ![game-play](game-play.png)
 
